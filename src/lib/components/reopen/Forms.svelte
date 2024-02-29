@@ -33,22 +33,59 @@
 		form__filter_data.period = event.currentTarget.value;
 	};
 
-	const handle_filter = () => {};
+	const handle_filter = () => {
+		if (locations) {
+			let new_filtered_locations = [];
+			let location: TypeLocation;
+			for (location of locations) {
+				let filter_ok = true;
+				if (!form__filter_data.show_closed_locations && !location.opened) filter_ok = false;
+
+				// Ve os horarios da academia
+				let opened_filter_ok = false;
+				if ('schedules' in location) {
+					for (let day of location.schedules) {
+						// Que nojeira esses dados
+						let opened_at = day.hour
+							.split(' às ')
+							.map((h) => h.trim().replace('h', '').slice(0, 2));
+						if (opened_at.length !== 2) continue;
+						if (
+							(form__filter_data.period === '06:00 até 12:00' &&
+								'06' <= opened_at[0] &&
+								opened_at[1] >= '12') ||
+							(form__filter_data.period === '12:01 até 18:00' &&
+								'12' < opened_at[0] &&
+								opened_at[1] >= '18') ||
+							(form__filter_data.period === '18:01 até 23:00' &&
+								'18' < opened_at[0] &&
+								opened_at[1] >= '23')
+						) {
+							opened_filter_ok = true;
+							break;
+						}
+					}
+				}
+
+				if (filter_ok && (form__filter_data.show_closed_locations || opened_filter_ok))
+					new_filtered_locations.push({ ...location });
+			}
+			filtered_locations = new_filtered_locations;
+		}
+	};
 
 	const handle_clear = () => {
-		filtered_locations = cloneDeep(locations);
+		if (locations) filtered_locations = cloneDeep(locations);
 		form__filter_data = {
 			period: '',
 			show_closed_locations: false
 		};
 	};
-
-	$: console.log(form__filter_data);
 </script>
 
 <div class="forms-container">
 	<div class="forms-container-title">
-		<img src={clock_icon} alt="Clock Image" />
+		<img src={clock_icon} alt="Clock" />
 		<span>Horário</span>
 	</div>
 	<div class="forms-fields">

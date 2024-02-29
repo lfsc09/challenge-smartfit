@@ -43,7 +43,6 @@
 					if (!(location.id in treated_locations)) treated_locations[location.id] = location;
 				}
 				locations = cloneDeep(Object.values(treated_locations));
-				console.log(locations);
 				filtered_locations = cloneDeep(locations);
 			})
 			.catch((err) => {
