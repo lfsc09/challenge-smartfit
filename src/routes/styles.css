@@ -1,0 +1,37 @@
+@font-face {
+	font-family: 'Gotham';
+	src: url('../lib/resourses/fonts/gotham-light.woff2');
+	font-weight: 300;
+}
+
+@font-face {
+	font-family: 'Gotham';
+	src: url('../lib/resourses/fonts/gotham-book.woff2');
+	font-weight: 500;
+}
+
+@font-face {
+	font-family: 'Gotham';
+	src: url('../lib/resourses/fonts/gotham-black.woff2');
+	font-weight: 700;
+}
+
+@font-face {
+	font-family: 'Gotham';
+	src: url('../lib/resourses/fonts/gotham-bold.woff2');
+	font-weight: 900;
+}
+
+:root {
+	font-family: 'Gotham';
+	--dark-grey: #333333;
+	--light-grey: #808080;
+	--very-light-grey: #e6e6e6;
+	--yellow: #ffb612;
+	--red: #dc0a17;
+	--green: #2fc022;
+}
+
+body {
+	margin: 0;
+}
